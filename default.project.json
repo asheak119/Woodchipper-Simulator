@@ -1,0 +1,51 @@
+{
+  "name": "WoodchipperSimulator",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+      "$className": "ReplicatedStorage",
+      "Shared": {
+        "$path": "src/ReplicatedStorage/Shared"
+      },
+      "Events": {
+        "$className": "Folder",
+        "ProcessItem": {
+          "$className": "RemoteEvent"
+        },
+        "PurchaseUpgrade": {
+          "$className": "RemoteFunction"
+        },
+        "CollectItem": {
+          "$className": "RemoteEvent"
+        },
+        "GetPlayerData": {
+          "$className": "RemoteFunction"
+        }
+      }
+    },
+    "ServerScriptService": {
+      "$className": "ServerScriptService",
+      "Server": {
+        "$path": "src/ServerScriptService/Server",
+        "ServerDataModule": {
+          "$path": "src/ServerScriptService/Server/ServerDataModule.lua"
+        }
+      }
+    },
+    "StarterPlayer": {
+      "$className": "StarterPlayer",
+      "StarterPlayerScripts": {
+        "$className": "StarterPlayerScripts",
+        "Client": {
+          "$path": "src/StarterPlayerScripts/Client"
+        }
+      }
+    },
+    "StarterGui": {
+      "$className": "StarterGui",
+      "UI": {
+        "$path": "src/StarterGui/UI"
+      }
+    }
+  }
+}
