@@ -1,3 +1,4 @@
+
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local GameData = require(ReplicatedStorage.Shared.GameData)
@@ -19,11 +20,60 @@ ScreenGui.Name = "MainShopUI"
 ScreenGui.ResetOnSpawn = false
 ScreenGui.Parent = PlayerGui
 
+-- HUD for Stats
+local HUDFrame = Instance.new("Frame")
+HUDFrame.Size = UDim2.new(0, 200, 0, 100)
+HUDFrame.Position = UDim2.new(0.5, -100, 0, 10)
+HUDFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+HUDFrame.BackgroundTransparency = 0.5
+HUDFrame.Parent = ScreenGui
+
+local UIListLayoutHUD = Instance.new("UIListLayout")
+UIListLayoutHUD.Parent = HUDFrame
+UIListLayoutHUD.SortOrder = Enum.SortOrder.LayoutOrder
+
+local CashLabel = Instance.new("TextLabel")
+CashLabel.Size = UDim2.new(1, 0, 0, 50)
+CashLabel.BackgroundTransparency = 1
+CashLabel.Text = "Cash: 0"
+CashLabel.TextColor3 = Color3.fromRGB(255, 215, 0)
+CashLabel.TextSize = 24
+CashLabel.LayoutOrder = 1
+CashLabel.Parent = HUDFrame
+
+local WoodLabel = Instance.new("TextLabel")
+WoodLabel.Size = UDim2.new(1, 0, 0, 50)
+WoodLabel.BackgroundTransparency = 1
+WoodLabel.Text = "Wood: 0 / 10"
+WoodLabel.TextColor3 = Color3.fromRGB(139, 69, 19)
+WoodLabel.TextSize = 24
+WoodLabel.LayoutOrder = 2
+WoodLabel.Parent = HUDFrame
+
+-- Update HUD via Leaderstats
+local leaderstats = player:WaitForChild("leaderstats", 10)
+if leaderstats then
+    local coins = leaderstats:WaitForChild("Coins")
+    local items = leaderstats:WaitForChild("Items")
+
+    local function updateHUD()
+        CashLabel.Text = "Cash: " .. tostring(coins.Value)
+        -- Hardcoded max capacity display here just for visual, actual server logic handles real cap
+        -- Or we can fetch it, but let's just show current wood.
+        WoodLabel.Text = "Wood: " .. tostring(items.Value)
+    end
+
+    coins.Changed:Connect(updateHUD)
+    items.Changed:Connect(updateHUD)
+    updateHUD()
+end
+
+-- Shop Frame
 local MainFrame = Instance.new("Frame")
 MainFrame.Size = UDim2.new(0, 300, 0, 400)
 MainFrame.Position = UDim2.new(0.5, -150, 0.5, -200)
 MainFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-MainFrame.Visible = true
+MainFrame.Visible = false
 MainFrame.Parent = ScreenGui
 
 local Title = Instance.new("TextLabel")
@@ -39,7 +89,6 @@ UIListLayout.Parent = MainFrame
 UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 UIListLayout.Padding = UDim.new(0, 10)
 
--- Reorder title
 Title.LayoutOrder = 1
 
 local function createButton(name, layoutOrder, callback)

@@ -9,14 +9,8 @@
       },
       "Events": {
         "$className": "Folder",
-        "ProcessItem": {
-          "$className": "RemoteEvent"
-        },
         "PurchaseUpgrade": {
           "$className": "RemoteFunction"
-        },
-        "CollectItem": {
-          "$className": "RemoteEvent"
         },
         "GetPlayerData": {
           "$className": "RemoteFunction"
@@ -38,13 +32,176 @@
         "$className": "StarterPlayerScripts",
         "Client": {
           "$path": "src/StarterPlayerScripts/Client"
+        },
+        "UI": {
+          "$path": "src/StarterPlayerScripts/Client/UI"
         }
       }
     },
     "StarterGui": {
-      "$className": "StarterGui",
-      "UI": {
-        "$path": "src/StarterGui/UI"
+      "$className": "StarterGui"
+    },
+    "Workspace": {
+      "$className": "Workspace",
+      "Baseplate": {
+        "$className": "Part",
+        "$properties": {
+          "Anchored": true,
+          "Size": [
+            500,
+            10,
+            500
+          ],
+          "Position": [
+            0,
+            -5,
+            0
+          ],
+          "Locked": true
+        }
+      },
+      "SpawnLocation": {
+        "$className": "SpawnLocation",
+        "$properties": {
+          "Anchored": true,
+          "Size": [
+            12,
+            1,
+            12
+          ],
+          "Position": [
+            0,
+            0.5,
+            0
+          ]
+        }
+      },
+      "Map": {
+        "$className": "Folder",
+        "Hub": {
+          "$className": "Folder",
+          "Woodchipper": {
+            "$className": "Part",
+            "$properties": {
+              "Name": "Woodchipper",
+              "Anchored": true,
+              "Size": [
+                10,
+                8,
+                10
+              ],
+              "Position": [
+                20,
+                4,
+                0
+              ]
+            },
+            "ProcessPrompt": {
+              "$className": "ProximityPrompt",
+              "$properties": {
+                "ActionText": "Process Wood",
+                "HoldDuration": 1,
+                "RequiresLineOfSight": false
+              }
+            }
+          },
+          "ShopTerminal": {
+            "$className": "Part",
+            "$properties": {
+              "Name": "ShopTerminal",
+              "Anchored": true,
+              "Size": [
+                4,
+                6,
+                4
+              ],
+              "Position": [
+                -20,
+                3,
+                0
+              ]
+            },
+            "ShopPrompt": {
+              "$className": "ProximityPrompt",
+              "$properties": {
+                "ActionText": "Open Shop",
+                "RequiresLineOfSight": false
+              }
+            }
+          }
+        },
+        "Forest_Zone1": {
+          "$className": "Folder",
+          "OakTree1": {
+            "$className": "Part",
+            "$properties": {
+              "Anchored": true,
+              "Size": [
+                4,
+                20,
+                4
+              ],
+              "Position": [
+                50,
+                10,
+                50
+              ]
+            },
+            "HarvestClick": {
+              "$className": "ClickDetector",
+              "$properties": {
+                "MaxActivationDistance": 15
+              }
+            }
+          },
+          "OakTree2": {
+            "$className": "Part",
+            "$properties": {
+              "Anchored": true,
+              "Size": [
+                4,
+                20,
+                4
+              ],
+              "Position": [
+                50,
+                10,
+                70
+              ]
+            },
+            "HarvestClick": {
+              "$className": "ClickDetector",
+              "$properties": {
+                "MaxActivationDistance": 15
+              }
+            }
+          }
+        },
+        "Jungle_Zone2": {
+          "$className": "Folder",
+          "PineTree1": {
+            "$className": "Part",
+            "$properties": {
+              "Anchored": true,
+              "Size": [
+                4,
+                30,
+                4
+              ],
+              "Position": [
+                150,
+                15,
+                150
+              ]
+            },
+            "HarvestClick": {
+              "$className": "ClickDetector",
+              "$properties": {
+                "MaxActivationDistance": 15
+              }
+            }
+          }
+        }
       }
     }
   }

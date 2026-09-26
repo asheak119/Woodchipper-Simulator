@@ -15,9 +15,15 @@ GameData.Storage = {
 }
 
 GameData.Zones = {
-    [1] = { Name = "Forest", Cost = 0 },
-    [2] = { Name = "Jungle", Cost = 1000 },
-    [3] = { Name = "Magical Woods", Cost = 5000 }
+    [1] = { Name = "Forest_Zone1", Cost = 0 },
+    [2] = { Name = "Jungle_Zone2", Cost = 1000 },
+    [3] = { Name = "Magical_Woods", Cost = 5000 }
+}
+
+GameData.Trees = {
+    OakTree = { RequiredZone = 1, WoodAmount = 1 },
+    PineTree = { RequiredZone = 2, WoodAmount = 3 },
+    RedwoodTree = { RequiredZone = 3, WoodAmount = 10 }
 }
 
 return GameData
