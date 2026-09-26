@@ -24,13 +24,15 @@ local function handleTreeHarvest(player, treePart)
     local data = ServerDataModule.GetPlayerData(player)
     if not data then return end
 
-    -- Safety Check: Proximity
+    -- Safety Check: Proximity. Increased to 30 to account for large tree size.
     local character = player.Character
     if not character or not character:FindFirstChild("HumanoidRootPart") then return end
-    if (character.HumanoidRootPart.Position - treePart.Position).Magnitude > 20 then return end
+    if (character.HumanoidRootPart.Position - treePart.Position).Magnitude > 30 then return end
+
+    -- Check if tree is already harvested (falling)
+    if not treePart.Anchored then return end
 
     -- Determine Tree Type and Zone
-    -- Basic logic: prefix of tree name matches GameData.Trees (e.g. OakTree1 -> OakTree)
     local treeType = "OakTree"
     for tType, tData in pairs(GameData.Trees) do
         if string.find(treePart.Name, tType) then
@@ -49,10 +51,7 @@ local function handleTreeHarvest(player, treePart)
         end
     end
 
-    if not hasUnlocked then
-        -- Could send a client message here "Zone locked!"
-        return
-    end
+    if not hasUnlocked then return end
 
     local storageLevel = data.StorageLevel
     local storageData = GameData.Storage[storageLevel]
@@ -61,6 +60,26 @@ local function handleTreeHarvest(player, treePart)
     if data.Items < maxCapacity then
         data.Items = math.min(data.Items + treeData.WoodAmount, maxCapacity)
         updateLeaderstats(player, data)
+
+        -- Make tree fall over
+        local originalCFrame = treePart.CFrame
+        treePart.Anchored = false
+
+        -- Give it a slight push to make sure it falls
+        local pushForce = Instance.new("BodyVelocity")
+        pushForce.Velocity = Vector3.new(math.random(-10, 10), 0, math.random(-10, 10))
+        pushForce.MaxForce = Vector3.new(10000, 10000, 10000)
+        pushForce.Parent = treePart
+
+        game.Debris:AddItem(pushForce, 0.1)
+
+        -- Respawn tree after 5 seconds
+        task.delay(5, function()
+            treePart.Anchored = true
+            treePart.CFrame = originalCFrame
+            treePart.Velocity = Vector3.new(0, 0, 0)
+            treePart.RotVelocity = Vector3.new(0, 0, 0)
+        end)
     end
 end
 
@@ -69,10 +88,10 @@ local function handleWoodProcessing(player, chipperPart)
     local data = ServerDataModule.GetPlayerData(player)
     if not data then return end
 
-    -- Safety Check: Proximity
+    -- Safety Check: Proximity. Increased to 30.
     local character = player.Character
     if not character or not character:FindFirstChild("HumanoidRootPart") then return end
-    if (character.HumanoidRootPart.Position - chipperPart.Position).Magnitude > 15 then return end
+    if (character.HumanoidRootPart.Position - chipperPart.Position).Magnitude > 30 then return end
 
     if data.Items > 0 then
         local chipperLevel = data.WoodchipperLevel

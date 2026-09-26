@@ -1,4 +1,3 @@
-
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local GameData = require(ReplicatedStorage.Shared.GameData)
@@ -138,4 +137,12 @@ ToggleButton.Parent = ScreenGui
 
 ToggleButton.MouseButton1Click:Connect(function()
     MainFrame.Visible = not MainFrame.Visible
+end)
+
+local ProximityPromptService = game:GetService("ProximityPromptService")
+
+ProximityPromptService.PromptTriggered:Connect(function(prompt, playerTrig)
+    if playerTrig == player and prompt.Name == "ShopPrompt" then
+        MainFrame.Visible = not MainFrame.Visible
+    end
 end)
